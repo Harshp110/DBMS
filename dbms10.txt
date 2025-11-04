@@ -1,0 +1,105 @@
+db.employee.insertMany([
+  {
+    Name: { FName: "Amit", LName: "Shah" },
+    Company_name: "Infosys",
+    Salary: 45000,
+    Designation: "Programmer",
+    Age: 28,
+    Expertise: ["Mongodb", "Mysql", "Cassandra"],
+    DOB: new Date("1997-02-15"),
+    Email: "amit.shah@example.com",
+    Contact: "9876543210",
+    Address: [
+      { PAddr: "123 MG Road, Pune", LAddr: "Apt 12" },
+      { PAddr: "Office Road, Pune", LAddr: "Floor 3" }
+    ]
+  },
+  {
+    Name: { FName: "Priya", LName: "Kumar" },
+    Company_name: "TCS",
+    Salary: 38000,
+    Designation: "Programmer",
+    Age: 25,
+    Expertise: ["Nodejs", "React", "MongoDB"],
+    DOB: new Date("1999-07-09"),
+    Email: "priya.kumar@example.com",
+    Contact: "9123456780",
+    Address: [
+      { PAddr: "45 MG Road, Mumbai", LAddr: "House 5" }
+    ]
+  },
+  {
+    Name: { FName: "Rahul", LName: "Desai" },
+    Company_name: "Infosys",
+    Salary: 30000,
+    Designation: "Tester",
+    Age: 26,
+    Expertise: ["Selenium", "MySQL"],
+    DOB: new Date("1998-04-20"),
+    Email: "rahul.desai@example.com",
+    Contact: "9988776655",
+    Address: [
+      { PAddr: "22 Park Street, Delhi", LAddr: "Block B" }
+    ]
+  },
+  {
+    Name: { FName: "Meera", LName: "Patel" },
+    Company_name: "TCS",
+    Salary: 42000,
+    Designation: "Analyst",
+    Age: 29,
+    Expertise: ["Python", "Django"],
+    DOB: new Date("1995-11-02"),
+    Email: "meera.patel@example.com",
+    Contact: "9012345678",
+    Address: [
+      { PAddr: "9 Marine Drive, Mumbai", LAddr: "Tower A" }
+    ]
+  },
+  {
+    Name: { FName: "Vikram", LName: "Gupta" },
+    Company_name: "Wipro",
+    Salary: 27000,
+    Designation: "Programmer",
+    Age: 24,
+    Expertise: ["Java", "Spring"],
+    DOB: new Date("2000-05-16"),
+    Email: "vikram.gupta@example.com",
+    Contact: "8899001122",
+    Address: [
+      { PAddr: "101 Sector 5, Noida", LAddr: "House 20" }
+    ]
+  }
+])
+db.employee.find({
+  Designation: "Programmer",
+  Salary: { $gt: 30000 }
+}).pretty()
+db.employee.updateOne(
+  { Designation: "Tester", Company_name: "TCS", Age: 25 },
+  { $setOnInsert: {
+      Name: { FName: "Rohan", LName: "Yadav" },
+      Salary: 32000,
+      Expertise: ["Testing", "JMeter"],
+      DOB: new Date("1999-01-01"),
+      Email: "rohan.yadav@tcs.com",
+      Contact: "9090909090",
+      Address: [{ PAddr: "Andheri, Mumbai", LAddr: "Block C" }]
+    }
+  },
+  { upsert: true }
+)
+db.employee.updateMany(
+  { Company_name: "Infosys" },
+  { $inc: { Salary: 10000 } }
+)
+db.employee.updateMany(
+  { Company_name: "TCS" },
+  { $inc: { Salary: -5000 } }
+)
+db.employee.find({
+  Designation: { $ne: "Tester" }
+}).pretty()
+db.employee.find({
+  Expertise: ["Mongodb", "Mysql", "Cassandra"]
+}).pretty()
